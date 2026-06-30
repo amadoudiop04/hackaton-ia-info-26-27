@@ -1,0 +1,69 @@
+DOCUMENTATION DE DÉPLOIEMENT INFRASTRUCTURE — TECHCORP
+1. Choix Technique & Justification
+Pour reconstruire une infrastructure saine suite aux suspicions de compromission de l'ancienne équipe, la solution Ollama conteneurisée sous Docker a été sélectionnée.
+
+Sécurité : Utilisation de l'image officielle isolée, limitant la surface d'attaque.
+
+Agilité (Pivot Technique) : Les fichiers hérités locaux étant corrompus ou manquants (total 0 dans le répertoire d'origine), le choix d'Ollama a permis de basculer instantanément sur le modèle de base phi3.5 (3.8B) depuis le registre officiel pour assurer la continuité de la mission dans le délai imparti de 7h.
+
+2. Optimisation des Performances & Paramètres
+Le modèle personnalisé financial-model intègre les optimisations suivantes directement au niveau de sa couche d'inférence (via le Modelfile) :
+
+Précision / Température (0.3) : Une température basse a été verrouillée pour garantir des réponses factuelles, rigoureuses et adaptées à l'analyse financière, limitant drastiquement le taux d'hallucination.
+
+Fenêtre de Contexte (4096 tokens) : Dimensionnée pour permettre l'analyse de rapports ou de structures de données intermédiaires sans saturer la mémoire du serveur.
+
+Quantization Native : Utilisation du format compressé d'Ollama permettant une exécution fluide avec une empreinte VRAM optimisée pour l'architecture matérielle cible.
+
+3. Fichiers de Configuration (Branche feature/infra-setup)
+infra/docker-compose.yml
+YAML
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: techcorp-ollama-inference
+    volumes:
+      - ollama_storage:/root/.ollama
+      - /Users/lutula/hackaton-ia-info-26-27:/project
+    ports:
+      - "11434:11434"
+    networks:
+      - techcorp-net
+    restart: unless-stopped
+
+networks:
+  techcorp-net:
+    external: true
+
+volumes:
+  ollama_storage:
+infra/Modelfile
+Dockerfile
+FROM phi3.5
+
+PARAMETER num_ctx 4096
+PARAMETER temperature 0.3
+PARAMETER top_p 0.9
+
+SYSTEM """You are TechCorp's secure Financial AI assistant. Provide precise, professional, and mathematically accurate financial analysis. Do not hallucinate statistics."""
+4. Informations d'Accès pour l'Équipe DEV WEB
+Le serveur d'inférence est validé, fonctionnel et exposé. Les développeurs peuvent dès à présent interconnecter l'interface de chat en utilisant les paramètres suivants :
+
+URL + Port global : http://localhost:11434
+
+Route de l'API (Chat Completion) : /api/chat
+
+Nom exact du modèle à appeler : financial-model
+
+Payload d'exemple pour l'intégration :
+JSON
+{
+  "model": "financial-model",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Génère un résumé des indicateurs de performance clés (KPI) financiers."
+    }
+  ],
+  "stream": false
+}

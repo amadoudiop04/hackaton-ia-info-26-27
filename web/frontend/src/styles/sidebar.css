@@ -1,9 +1,108 @@
-/* Panneau latéral : paramètres + statut serveur. Owner: Maxime2 */
+/* Panneau latéral. Owner: Maxime2
+   Traduit du design "Chat AI" (claude.ai/design) — thème clair. */
 
 .sidebar {
-  width: 280px;
-  padding: 1rem;
-  background: var(--panel);
-  border-right: 1px solid #30363d;
-  overflow-y: auto;
+  width: 296px;
+  flex: 0 0 296px;
+  display: flex;
+  flex-direction: column;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  padding: 16px 12px 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    flex-basis 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- État replié : rail étroit, icônes seules --- */
+.sidebar--collapsed {
+  width: 64px;
+  flex-basis: 64px;
+  padding: 16px 10px 12px;
+}
+.sidebar--collapsed .sidebar__brand {
+  justify-content: center;
+  padding: 6px 0 18px;
+}
+.sidebar--collapsed .sidebar__brand-left {
+  display: none;
+}
+.sidebar--collapsed .sidebar__new {
+  justify-content: center;
+  padding: 11px;
+}
+.sidebar--collapsed .sidebar__brand-name,
+.sidebar--collapsed .sidebar__new-label {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px 18px;
+}
+.sidebar__brand-left {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.sidebar__brand-name {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: #2a2620;
+  letter-spacing: -0.01em;
+  transition: opacity 0.2s ease;
+}
+.sidebar__collapse-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.sidebar__collapse-btn:hover {
+  background: rgba(60, 50, 40, 0.06);
+}
+.sidebar__collapse {
+  display: block;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.sidebar--collapsed .sidebar__collapse {
+  transform: rotate(180deg);
+}
+
+.sidebar__new {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 11px 14px;
+  border-radius: 99px;
+  background: rgba(217, 119, 87, 0.14);
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+.sidebar__new:hover {
+  background: rgba(217, 119, 87, 0.22);
+}
+.sidebar__new-label {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--accent-deep);
+  transition: opacity 0.2s ease;
+}
+
+.sidebar__spacer {
+  flex: 1;
 }

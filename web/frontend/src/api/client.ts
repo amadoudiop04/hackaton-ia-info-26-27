@@ -3,11 +3,30 @@
 
 import type { ChatParams, Message } from "../types/chat";
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+// @ts-ignore
+const API_URL = import.meta.env?.VITE_API_URL ?? "http://localhost:8000";
+
+/** Corps de requête commun à /api/chat et /api/chat/stream.
+ *  Mappe le camelCase du front vers le snake_case du contrat Pydantic. */
+function buildChatBody(messages: Message[], params: ChatParams) {
+  return JSON.stringify({
+    messages,
+    temperature: params.temperature,
+    max_tokens: params.maxTokens,
+    model: params.model,
+  });
+}
 
 /** GET /api/health -> serveur d'inférence joignable ? */
 export async function health(): Promise<boolean> {
-  throw new Error("not implemented");
+  try {
+    const res = await fetch(`${API_URL}/api/health`);
+    if (!res.ok) return false;
+    const data: { ok: boolean } = await res.json();
+    return data.ok === true;
+  } catch {
+    return false;
+  }
 }
 
 /** POST /api/chat -> réponse complète. */
@@ -15,14 +34,40 @@ export async function sendChat(
   messages: Message[],
   params: ChatParams,
 ): Promise<string> {
-  throw new Error("not implemented");
+  const res = await fetch(`${API_URL}/api/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: buildChatBody(messages, params),
+  });
+  if (!res.ok) {
+    throw new Error(`Backend ${res.status} : ${await res.text()}`);
+  }
+  const data: { content: string } = await res.json();
+  return data.content;
 }
 
-/** POST /api/chat/stream -> appelle onToken pour chaque fragment reçu. */
+/** POST /api/chat/stream -> appelle onToken pour chaque fragment reçu.
+ *  Flux text/plain : le backend yield les tokens bruts au fil de l'eau. */
 export async function sendChatStream(
   messages: Message[],
   params: ChatParams,
   onToken: (token: string) => void,
 ): Promise<void> {
-  throw new Error("not implemented");
+  const res = await fetch(`${API_URL}/api/chat/stream`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: buildChatBody(messages, params),
+  });
+  if (!res.ok || !res.body) {
+    throw new Error(`Backend ${res.status} : ${await res.text()}`);
+  }
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const chunk = decoder.decode(value, { stream: true });
+    if (chunk) onToken(chunk);
+  }
 }
