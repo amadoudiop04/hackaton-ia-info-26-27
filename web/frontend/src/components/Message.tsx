@@ -3,7 +3,6 @@
 
 import ReactMarkdown from "react-markdown";
 import type { Message as ChatMessage } from "../types/chat";
-import ReactMarkdown from "react-markdown";
 
 interface Props {
   message: ChatMessage;

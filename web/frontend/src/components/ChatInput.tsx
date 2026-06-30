@@ -2,6 +2,7 @@
 // Owner: Alexandre (feat/frontend-chat-ui)
 
 import { useState, KeyboardEvent, FormEvent } from "react";
+import type { ChatParams } from "../types/chat";
 
 interface Props {
   params: ChatParams;

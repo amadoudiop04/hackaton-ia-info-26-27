@@ -5,7 +5,6 @@ import type { ChatParams, Message } from "../types/chat";
 
 // @ts-ignore
 const API_URL = import.meta.env?.VITE_API_URL ?? "http://localhost:8000";
-void API_URL;
 
 /** Corps de requête commun à /api/chat et /api/chat/stream.
  *  Mappe le camelCase du front vers le snake_case du contrat Pydantic. */
@@ -35,20 +34,40 @@ export async function sendChat(
   messages: Message[],
   params: ChatParams,
 ): Promise<string> {
-  void messages;
-  void params;
-  throw new Error("not implemented");
+  const res = await fetch(`${API_URL}/api/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: buildChatBody(messages, params),
+  });
+  if (!res.ok) {
+    throw new Error(`Backend ${res.status} : ${await res.text()}`);
+  }
+  const data: { content: string } = await res.json();
+  return data.content;
 }
 
 /** POST /api/chat/stream -> appelle onToken pour chaque fragment reçu.
- *  Flux SSE (text/event-stream) : lignes "data: <token>", sentinelle "[DONE]". */
+ *  Flux text/plain : le backend yield les tokens bruts au fil de l'eau. */
 export async function sendChatStream(
   messages: Message[],
   params: ChatParams,
   onToken: (token: string) => void,
 ): Promise<void> {
-  void messages;
-  void params;
-  void onToken;
-  throw new Error("not implemented");
+  const res = await fetch(`${API_URL}/api/chat/stream`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: buildChatBody(messages, params),
+  });
+  if (!res.ok || !res.body) {
+    throw new Error(`Backend ${res.status} : ${await res.text()}`);
+  }
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const chunk = decoder.decode(value, { stream: true });
+    if (chunk) onToken(chunk);
+  }
 }
