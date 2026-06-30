@@ -42,6 +42,12 @@ ENV/
 .mypy_cache/
 .ruff_cache/
 
+# --- Node / Frontend (React + Vite) ---
+node_modules/
+dist/
+.vite/
+*.local
+
 # --- IDE / OS ---
 .vscode/
 .idea/

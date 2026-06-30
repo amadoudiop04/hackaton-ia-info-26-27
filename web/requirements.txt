@@ -1,4 +1,0 @@
-streamlit>=1.58
-starlette>=0.47   # requis par streamlit>=1.58 (sinon ImportError gzip middleware)
-requests>=2.31
-python-dotenv>=1.0

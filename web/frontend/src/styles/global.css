@@ -1,0 +1,21 @@
+/* Styles globaux + layout général. Owner: Maxime2 / Alexandre */
+
+:root {
+  --bg: #0e1117;
+  --panel: #161b22;
+  --accent: #4f8bff;
+  --text: #e6edf3;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app { display: flex; height: 100vh; }
+.app__main { display: flex; flex-direction: column; flex: 1; }
+.app__header { padding: 1rem; font-weight: 600; border-bottom: 1px solid #30363d; }
