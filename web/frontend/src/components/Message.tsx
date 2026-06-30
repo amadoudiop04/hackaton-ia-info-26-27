@@ -3,6 +3,7 @@
 
 import ReactMarkdown from "react-markdown";
 import type { Message as ChatMessage } from "../types/chat";
+import ReactMarkdown from "react-markdown";
 
 interface Props {
   message: ChatMessage;
@@ -11,9 +12,7 @@ interface Props {
 export function Message({ message }: Props) {
   return (
     <div className={`message message--${message.role}`}>
-      <div className="message__bubble">
-        <ReactMarkdown>{message.content}</ReactMarkdown>
-      </div>
+      <ReactMarkdown>{message.content}</ReactMarkdown>
     </div>
   );
 }
