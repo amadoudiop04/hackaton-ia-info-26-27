@@ -2,12 +2,16 @@
 // Owner: Alexandre (feat/frontend-chat-ui)
 
 import type { Message as ChatMessage } from "../types/chat";
+import ReactMarkdown from "react-markdown";
 
 interface Props {
   message: ChatMessage;
 }
 
 export function Message({ message }: Props) {
-  // TODO: bulle stylée selon message.role + <ReactMarkdown>{message.content}</ReactMarkdown>
-  return <div className={`message message--${message.role}`}>{message.content}</div>;
+  return (
+    <div className={`message message--${message.role}`}>
+      <ReactMarkdown>{message.content}</ReactMarkdown>
+    </div>
+  );
 }

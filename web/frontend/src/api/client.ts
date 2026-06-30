@@ -3,7 +3,9 @@
 
 import type { ChatParams, Message } from "../types/chat";
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+// @ts-ignore
+const API_URL = import.meta.env?.VITE_API_URL ?? "http://localhost:8000";
+void API_URL;
 
 /** GET /api/health -> serveur d'inférence joignable ? */
 export async function health(): Promise<boolean> {
@@ -15,6 +17,8 @@ export async function sendChat(
   messages: Message[],
   params: ChatParams,
 ): Promise<string> {
+  void messages;
+  void params;
   throw new Error("not implemented");
 }
 
@@ -24,5 +28,8 @@ export async function sendChatStream(
   params: ChatParams,
   onToken: (token: string) => void,
 ): Promise<void> {
+  void messages;
+  void params;
+  void onToken;
   throw new Error("not implemented");
 }
