@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # --- Python ---
 __pycache__/
 *.py[cod]
@@ -54,3 +55,7 @@ dist/
 *.swp
 .DS_Store
 Thumbs.db
+=======
+datasets/dataset_v0.json
+.DS_Store
+>>>>>>> upstream/main
