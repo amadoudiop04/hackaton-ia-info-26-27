@@ -1,8 +1,0 @@
-# Configuration serveur + thème Streamlit
-[server]
-port = 8501
-headless = true
-
-[theme]
-base = "dark"
-primaryColor = "#4F8BFF"
