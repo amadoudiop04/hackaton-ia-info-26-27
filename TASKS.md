@@ -67,7 +67,7 @@ Fichiers : `frontend/src/components/ChatWindow.tsx`, `Message.tsx`, `ChatInput.t
 
 ---
 
-## 👤 Maxime2 — Frontend Setup, État & Sidebar
+## 👤 Maxime pontus — Frontend Setup, État & Sidebar
 **Branche : `feat/frontend-core-sidebar`**
 Fichiers : `frontend/` (init Vite), `src/main.tsx`, `App.tsx`, `api/client.ts`,
 `hooks/useChat.ts`, `components/Sidebar.tsx`, `styles/sidebar.css`
