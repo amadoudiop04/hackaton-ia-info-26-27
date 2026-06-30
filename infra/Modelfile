@@ -1,4 +1,4 @@
-FROM ./models/phi3_financial/phi-3.5-financial-q4_k_m.gguf
+FROM phi3.5
 
 PARAMETER num_ctx 4096
 PARAMETER temperature 0.3

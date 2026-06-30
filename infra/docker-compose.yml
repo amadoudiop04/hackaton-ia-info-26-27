@@ -1,0 +1,19 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: techcorp-ollama-inference
+    volumes:
+      - ollama_storage:/root/.ollama
+      - /Users/lutula/hackaton-ia-info-26-27:/project
+    ports:
+      - "11434:11434"
+    networks:
+      - techcorp-net
+    restart: unless-stopped
+
+networks:
+  techcorp-net:
+    external: true
+
+volumes:
+  ollama_storage:
