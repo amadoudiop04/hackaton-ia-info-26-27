@@ -8,23 +8,24 @@ import { Message } from "./Message";
 interface Props {
   messages: ChatMessage[];
   loading?: boolean;
-  model: string;
 }
 
 export function ChatWindow({ messages, loading }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  // Auto-scroll en bas à chaque nouveau message / token reçu.
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
   return (
-    <div className="chat-window">
-      {messages.map((m, i) => (
-        <Message key={i} message={m} />
-      ))}
-      {loading && <div className="chat-window__typing">…</div>}
-      <div ref={bottomRef} />
+    <div className="chat-window scroll">
+      <div className="chat-window__list">
+        {messages.map((m, i) => (
+          <Message key={i} message={m} />
+        ))}
+        <div ref={bottomRef} />
+      </div>
     </div>
   );
 }

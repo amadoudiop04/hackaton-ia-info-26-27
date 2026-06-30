@@ -1,5 +1,5 @@
-/* Panneau latéral : statut serveur, modèle, actions. Owner: Maxime2
-   Traduit du design "Chat AI" (claude.ai/design). */
+/* Panneau latéral. Owner: Maxime2
+   Traduit du design "Chat AI" (claude.ai/design) — thème clair. */
 
 .sidebar {
   width: 296px;
@@ -8,118 +8,101 @@
   flex-direction: column;
   background: var(--sidebar-bg);
   border-right: 1px solid var(--border);
-  padding: 18px 16px;
+  padding: 16px 12px 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    flex-basis 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- Statut serveur (pastille 🟢/🔴) --- */
-.sidebar__status {
+/* --- État replié : rail étroit, icônes seules --- */
+.sidebar--collapsed {
+  width: 64px;
+  flex-basis: 64px;
+  padding: 16px 10px 12px;
+}
+.sidebar--collapsed .sidebar__brand {
+  justify-content: center;
+  padding: 6px 0 18px;
+}
+.sidebar--collapsed .sidebar__brand-left {
+  display: none;
+}
+.sidebar--collapsed .sidebar__new {
+  justify-content: center;
+  padding: 11px;
+}
+.sidebar--collapsed .sidebar__brand-name,
+.sidebar--collapsed .sidebar__new-label {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.sidebar__brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 11px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 11px;
-  background: rgba(255, 255, 255, 0.015);
+  justify-content: space-between;
+  padding: 6px 10px 18px;
 }
-.sidebar__status-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
+.sidebar__brand-left {
+  display: flex;
+  align-items: center;
+  gap: 11px;
 }
-.sidebar__status-dot--on {
-  background: #3fb950;
-  box-shadow: 0 0 0 4px rgba(63, 185, 80, 0.14);
-}
-.sidebar__status-dot--off {
-  background: #f0524b;
-  box-shadow: 0 0 0 4px rgba(240, 82, 75, 0.13);
-}
-.sidebar__status-dot--unknown {
-  background: #6b7280;
-  box-shadow: 0 0 0 4px rgba(107, 114, 128, 0.13);
-}
-.sidebar__status-text {
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-/* --- Sélecteur de modèle --- */
-.sidebar__section {
-  margin-top: 26px;
-}
-.sidebar__label {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  margin-bottom: 9px;
-}
-.sidebar__select-wrap {
-  position: relative;
-}
-.sidebar__select {
-  width: 100%;
-  appearance: none;
-  background: rgba(255, 255, 255, 0.02);
-  color: var(--text);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 11px;
-  padding: 12px 38px 12px 14px;
-  font-size: 14px;
-  font-family: inherit;
+.sidebar__brand-name {
+  font-family: var(--serif);
+  font-size: 22px;
   font-weight: 500;
-  cursor: pointer;
-  outline: none;
+  color: #2a2620;
+  letter-spacing: -0.01em;
+  transition: opacity 0.2s ease;
 }
-.sidebar__chevron {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  pointer-events: none;
-  font-size: 11px;
-}
-
-/* --- Actions (poussées en bas) --- */
-.sidebar__spacer {
-  flex: 1;
-}
-.sidebar__btn {
+.sidebar__collapse-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  width: 100%;
-  padding: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 11px;
-  background: rgba(255, 255, 255, 0.025);
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.sidebar__btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.05);
-}
-.sidebar__btn-icon {
-  opacity: 0.7;
-}
-.sidebar__btn--ghost {
-  margin-top: 10px;
-  border-color: transparent;
+  padding: 4px;
+  border: none;
+  border-radius: 8px;
   background: transparent;
-  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s ease;
 }
-.sidebar__btn--ghost:hover:not(:disabled) {
-  color: #9aa0a8;
-  background: rgba(255, 255, 255, 0.02);
+.sidebar__collapse-btn:hover {
+  background: rgba(60, 50, 40, 0.06);
 }
-.sidebar__btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
+.sidebar__collapse {
+  display: block;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.sidebar--collapsed .sidebar__collapse {
+  transform: rotate(180deg);
+}
+
+.sidebar__new {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 11px 14px;
+  border-radius: 99px;
+  background: rgba(217, 119, 87, 0.14);
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+.sidebar__new:hover {
+  background: rgba(217, 119, 87, 0.22);
+}
+.sidebar__new-label {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--accent-deep);
+  transition: opacity 0.2s ease;
+}
+
+.sidebar__spacer {
+  flex: 1;
 }
