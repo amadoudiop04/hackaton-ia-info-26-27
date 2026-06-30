@@ -23,11 +23,21 @@ export default function App() {
 
   return (
     <div className="app">
-      <Sidebar params={params} onChange={setParams} onClear={clear} />
+      <Sidebar
+        params={params}
+        messages={messages}
+        onChange={setParams}
+        onClear={clear}
+      />
       <main className="app__main">
         <header className="app__header">TechCorp — Phi-3.5-Financial</header>
-        <ChatWindow messages={messages} loading={loading} />
-        <ChatInput onSend={sendMessage} disabled={loading} />
+        <ChatWindow messages={messages} loading={loading} model={params.model} />
+        <ChatInput
+          params={params}
+          onParamsChange={setParams}
+          onSend={sendMessage}
+          disabled={loading}
+        />
       </main>
     </div>
   );
