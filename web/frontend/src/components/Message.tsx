@@ -1,6 +1,7 @@
 // Bulle d'un message (user / assistant), rendu markdown.
 // Owner: Alexandre (feat/frontend-chat-ui)
 
+import ReactMarkdown from "react-markdown";
 import type { Message as ChatMessage } from "../types/chat";
 
 interface Props {
@@ -8,6 +9,11 @@ interface Props {
 }
 
 export function Message({ message }: Props) {
-  // TODO: bulle stylée selon message.role + <ReactMarkdown>{message.content}</ReactMarkdown>
-  return <div className={`message message--${message.role}`}>{message.content}</div>;
+  return (
+    <div className={`message message--${message.role}`}>
+      <div className="message__bubble">
+        <ReactMarkdown>{message.content}</ReactMarkdown>
+      </div>
+    </div>
+  );
 }
