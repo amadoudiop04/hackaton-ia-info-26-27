@@ -1,6 +1,7 @@
 // Bulle d'un message (user / assistant), rendu markdown.
 // Owner: Alexandre (feat/frontend-chat-ui)
 
+import ReactMarkdown from "react-markdown";
 import type { Message as ChatMessage } from "../types/chat";
 import ReactMarkdown from "react-markdown";
 

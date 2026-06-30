@@ -1,9 +1,11 @@
-// Zone de saisie : textarea + envoi (Entrée), désactivée pendant loading.
+// Zone de saisie : textarea + réglages temp/tokens + envoi (Entrée).
 // Owner: Alexandre (feat/frontend-chat-ui)
 
 import { useState, KeyboardEvent, FormEvent } from "react";
 
 interface Props {
+  params: ChatParams;
+  onParamsChange: (params: ChatParams) => void;
   onSend: (content: string) => void;
   disabled?: boolean;
 }

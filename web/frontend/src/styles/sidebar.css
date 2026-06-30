@@ -1,9 +1,125 @@
-/* Panneau latéral : paramètres + statut serveur. Owner: Maxime2 */
+/* Panneau latéral : statut serveur, modèle, actions. Owner: Maxime2
+   Traduit du design "Chat AI" (claude.ai/design). */
 
 .sidebar {
-  width: 280px;
-  padding: 1rem;
-  background: var(--panel);
-  border-right: 1px solid #30363d;
-  overflow-y: auto;
+  width: 296px;
+  flex: 0 0 296px;
+  display: flex;
+  flex-direction: column;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  padding: 18px 16px;
+}
+
+/* --- Statut serveur (pastille 🟢/🔴) --- */
+.sidebar__status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.015);
+}
+.sidebar__status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.sidebar__status-dot--on {
+  background: #3fb950;
+  box-shadow: 0 0 0 4px rgba(63, 185, 80, 0.14);
+}
+.sidebar__status-dot--off {
+  background: #f0524b;
+  box-shadow: 0 0 0 4px rgba(240, 82, 75, 0.13);
+}
+.sidebar__status-dot--unknown {
+  background: #6b7280;
+  box-shadow: 0 0 0 4px rgba(107, 114, 128, 0.13);
+}
+.sidebar__status-text {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* --- Sélecteur de modèle --- */
+.sidebar__section {
+  margin-top: 26px;
+}
+.sidebar__label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 9px;
+}
+.sidebar__select-wrap {
+  position: relative;
+}
+.sidebar__select {
+  width: 100%;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 11px;
+  padding: 12px 38px 12px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+}
+.sidebar__chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+  font-size: 11px;
+}
+
+/* --- Actions (poussées en bas) --- */
+.sidebar__spacer {
+  flex: 1;
+}
+.sidebar__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.sidebar__btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+}
+.sidebar__btn-icon {
+  opacity: 0.7;
+}
+.sidebar__btn--ghost {
+  margin-top: 10px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+}
+.sidebar__btn--ghost:hover:not(:disabled) {
+  color: #9aa0a8;
+  background: rgba(255, 255, 255, 0.02);
+}
+.sidebar__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }

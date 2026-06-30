@@ -8,6 +8,7 @@ import { Message } from "./Message";
 interface Props {
   messages: ChatMessage[];
   loading?: boolean;
+  model: string;
 }
 
 export function ChatWindow({ messages, loading }: Props) {

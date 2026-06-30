@@ -1,4 +1,5 @@
-/* Fenêtre de chat + bulles + saisie. Owner: Alexandre (feat/frontend-chat-ui) */
+/* Fenêtre de chat + bulles + composer. Owner: Alexandre (feat/frontend-chat-ui)
+   Traduit du design "Chat AI" (claude.ai/design). */
 
 .chat-window {
   flex: 1;
