@@ -29,11 +29,11 @@ Tant que ce contrat est respecté, les 4 lots avancent **en parallèle**.
 **Branche : `feat/backend-api`**
 Fichiers : `backend/main.py`, `backend/routes/chat.py`, `backend/models/schemas.py`
 
-- [ ] Setup FastAPI + CORS (autoriser `http://localhost:5173`)
-- [ ] Schemas Pydantic `Message / ChatRequest / ChatResponse / HealthResponse` → **pousser en premier**
-- [ ] Route `GET /api/health`
-- [ ] Route `POST /api/chat`
-- [ ] Route `POST /api/chat/stream` (StreamingResponse)
+- [x] Setup FastAPI + CORS (autoriser `http://localhost:5173`)
+- [x] Schemas Pydantic `Message / ChatRequest / ChatResponse / HealthResponse` 
+- [x] Route `GET /api/health`
+- [x] Route `POST /api/chat`
+- [x] Route `POST /api/chat/stream` (StreamingResponse)
 - [ ] Merge final des 3 autres branches
 
 **OK si :** `uvicorn main:app` démarre, `/docs` accessible, routes branchées sur le service.

@@ -1,4 +1,5 @@
-fastapi>=0.115
+fastapi>=0.115,<0.116
+starlette>=0.40,<0.42      # compat FastAPI 0.115 (évite le breaking change Router d'une starlette trop récente)
 uvicorn[standard]>=0.30
 httpx>=0.27
 pydantic>=2.7
